@@ -259,6 +259,7 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget)
 static void on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
 {
 		int ch;
+    if (argNokey) return;
 		
         // printf("key pressed, state =%04X, keyval=%04X, isGinMode = %d\r\n", event->state, event->keyval, isGinMode);
 
@@ -309,7 +310,7 @@ static void on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_da
                 ch = argEraseChar;
         }
 		
-		// exit on ctrl-c if child has exited
+		// exit on ctrl-d if child has exited
 		else if (childExited &&
 			(event->state & GDK_CONTROL_MASK) && (event->keyval == 0x0064)) {
 			on_quit_event();
@@ -419,15 +420,17 @@ int main (int argc, char *argv[])
         }
 
         else {
-                // DISPLAY DECORATED WINDOW
+          // DISPLAY DECORATED WINDOW
                 if (argFullV || (askWindowHeight > (screenHeight - BORDER))) {
-                        askWindowWidth = (int)((double)(screenHeight - BORDER) * aspectRatio);
-                        askWindowHeight = screenHeight - BORDER;
+                      askWindowWidth = (int)((double)(screenHeight - BORDER) * aspectRatio);
+                      askWindowHeight = screenHeight - BORDER;
+                      gtk_window_move(GTK_WINDOW(window), screenWidth - askWindowWidth, 0);
                 }
                 else if (argHalf) {
-					printf("Using half of the window width\n");
+					printf("Using right half of the screen\n");
 					askWindowWidth = screenWidth / 2;
 					askWindowHeight = (int)((double)askWindowWidth / aspectRatio);
+          gtk_window_move(GTK_WINDOW(window), screenWidth / 2, 0);
 				}
                 gtk_window_set_decorated(GTK_WINDOW(window), TRUE);
                 gtk_window_set_default_size(GTK_WINDOW(window), askWindowWidth, askWindowHeight);

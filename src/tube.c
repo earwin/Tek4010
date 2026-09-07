@@ -98,6 +98,7 @@ int argHideCursor = 0;
 int argWait = 0;
 int argFast = 0;
 int argHalf = 0;
+int argNokey = 0;
 
 int refresh_interval;           // after this time in msec next refresh is done
 int brightCounter = 0;
@@ -468,6 +469,14 @@ void tube_init(int argc, char* argv[])
                 else if (strcmp(argv[firstArg],"-fast") == 0) {
                         printf("Fast mode refresh without fading\n");
                         argFast = 1;
+                }
+                else if (strcmp(argv[firstArg],"-nokey") == 0) {
+                        if (!argFull){
+                          printf("Keyboard input disabled\n");
+                          argNokey = 1;
+                        }
+                        else
+                          printf("Keyboard entry must be allowed in full view");
                 }
                 else if (strcmp(argv[firstArg],"-wait") == 0) {
                         argWait = 3;

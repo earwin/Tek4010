@@ -23,6 +23,7 @@ extern int argHideCursor;
 extern int argWait;
 extern int argFast;
 extern int argHalf;
+extern int argNokey;
 
 extern int hDotsPerChar;
 extern int vDotsPerChar;
